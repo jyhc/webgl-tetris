@@ -1,0 +1,10 @@
+canvas {
+	border: 10px solid cyan;
+	background-color: black;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+video {
+	display: none;
+}
