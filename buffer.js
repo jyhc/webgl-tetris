@@ -4,7 +4,7 @@
 // Initialize the buffers we'll need. For this demo, we just
 // have one object -- a simple two-dimensional square.
 //
-function initBuffers(gl, positions) {
+function initBuffers(gl, positions, colors) {
 	// Create a buffer for the square's positions.
 
 	const positionBuffer = gl.createBuffer();
@@ -19,9 +19,6 @@ function initBuffers(gl, positions) {
 	gl.bufferData(gl.ARRAY_BUFFER,
 	new Float32Array(positions),
 	gl.STATIC_DRAW);
-
-	//repeat for colours
-	const colors = create_grid().tetris_grid_color;
 
 	const colorBuffer = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);

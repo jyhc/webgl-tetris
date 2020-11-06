@@ -61,8 +61,14 @@ function main() {
 		},
 	};
 
+	//add background to render queue
+	renderQueue.push(new Background(programInfo, gl));
+	renderQueue.push(new OPiece(programInfo, gl));
+
 	function render(now){
-		drawBG(gl, programInfo);
+		renderQueue.forEach(element => {
+			element.drawObject();
+		});
 		requestAnimationFrame(render);
 	}
 
