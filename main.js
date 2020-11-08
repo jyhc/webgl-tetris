@@ -63,14 +63,33 @@ function main() {
 
 	//add background to render queue
 	renderQueue.push(new Background(programInfo, gl));
-	renderQueue.push(new OPiece(programInfo, gl));
+	
+	//add first piece randomly
+	addRandomPiecetoGame(programInfo, gl);
 
-	function render(now){
+	// renderQueue.push(new OPiece(programInfo, gl));
+	// renderQueue.push(new IPiece(programInfo, gl));
+	// renderQueue.push(new SPiece(programInfo, gl));
+	// renderQueue.push(new ZPiece(programInfo, gl));
+	// renderQueue.push(new LPiece(programInfo, gl));
+	// renderQueue.push(new JPiece(programInfo, gl));
+	// renderQueue.push(new TPiece(programInfo, gl));
+
+	function render(){
 		renderQueue.forEach(element => {
 			element.drawObject();
 		});
-		requestAnimationFrame(render);
 	}
-
-	requestAnimationFrame(render);
+	function touchingBottom(){
+		const tile = renderQueue[renderQueue.length-1];
+		for(var i = 1; i < tile.positions.length; i+=2){
+			if(tile.positions[i] <= -1.0){
+				addRandomPiecetoGame(programInfo, gl);
+				return
+			}
+		}   
+	}
+	setInterval(render, 16);
+	setInterval(dropPiece, 500);
+	setInterval(touchingBottom, 16);
 }
