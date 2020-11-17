@@ -7,7 +7,7 @@ main();
 //
 function main() {
   const canvas = document.querySelector('#glcanvas');
-  const gl = canvas.getContext('webgl');
+  gl = canvas.getContext('webgl');
 
   // If we don't have a GL context, give up now
 
@@ -49,7 +49,7 @@ function main() {
   // Collect all the info needed to use the shader program.
   // Look up which attribute our shader program is using
   // for aVertexPosition and look up uniform locations.
-  const programInfo = {
+  programInfo = {
 		program: shaderProgram,
 		attribLocations: {
 			vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
@@ -67,28 +67,21 @@ function main() {
 	//add first piece randomly
 	addRandomPiecetoGame(programInfo, gl);
 
-	// renderQueue.push(new OPiece(programInfo, gl));
-	// renderQueue.push(new IPiece(programInfo, gl));
-	// renderQueue.push(new SPiece(programInfo, gl));
-	// renderQueue.push(new ZPiece(programInfo, gl));
-	// renderQueue.push(new LPiece(programInfo, gl));
-	// renderQueue.push(new JPiece(programInfo, gl));
-	// renderQueue.push(new TPiece(programInfo, gl));
-
 	function render(){
 		renderQueue.forEach(element => {
 			element.drawObject();
 		});
 	}
+
 	function touchingBottom(){
 		const tile = renderQueue[renderQueue.length-1];
-		for(var i = 1; i < tile.positions.length; i+=2){
-			if(tile.positions[i] <= -1.0){
-				addRandomPiecetoGame(programInfo, gl);
-				return
-			}
-		}   
+    	var rowcol = posToRC(tile.positions);
+		if(pieceBelow(rowcol)){
+			updateGridState(rowcol);
+			addRandomPiecetoGame(programInfo, gl);
+		}
 	}
+
 	setInterval(render, 16);
 	setInterval(dropPiece, 500);
 	setInterval(touchingBottom, 16);
